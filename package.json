@@ -12,6 +12,7 @@
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
     "apollo-utilities": "^1.3.4",
+    "env-cmd": "^10.1.0",
     "graphql": "^15.5.0",
     "mdb-react-ui-kit": "^1.0.0-beta4",
     "node-sass": "^5.0.0",
@@ -26,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:staging": "env-cmd -f .env.staging npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,4 +48,5 @@
       "last 1 safari version"
     ]
   }
+  
 }
