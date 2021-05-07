@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Ordes() {
+const About = () => {
     return (
         <div>
-            SOy Ordes
+            This is about
         </div>
     )
 }
 
-export default Ordes
+export default About;
