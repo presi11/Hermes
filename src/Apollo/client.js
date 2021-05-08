@@ -32,7 +32,6 @@ const AuthorizedApolloProvider = ({ children }) => {
 
     const authMiddleware = setContext(async () => {
             const token = await getAccessTokenSilently();
-            console.log(token);
             return {
                 headers: {
                     authorization: `Bearer ${token}` || null,
