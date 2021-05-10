@@ -1,12 +1,7 @@
-import { gql, useQuery } from '@apollo/client';
+import { HELLO } from '../../graphql/queries';
+import { useQuery } from '@apollo/client';
 import { MDBBtn } from 'mdb-react-ui-kit';
 import React from 'react';
-
-const HELLO = gql`
-    query hello_world {
-        hello_world
-    }
-`;
 
 const Home = () => {
     const { loading, error, data } = useQuery(HELLO);
