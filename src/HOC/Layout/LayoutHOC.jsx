@@ -41,7 +41,7 @@ const LayoutHOC = ({ children }) => {
             className={LayoutStyles.cursorPointer}
             onClick={() => redirect("home")}
           >
-            Hermes 5
+            Hermes
           </MDBNavbarBrand>
           <MDBNavbarToggler
             type="button"
