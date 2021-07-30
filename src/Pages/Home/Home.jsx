@@ -12,6 +12,7 @@ const Home = () => {
     return (
         <>
             <MDBBtn>Button</MDBBtn>
+            <img src="logo-hermes_sinF.png" alt="Logo hermes" />
             <div>{ data.hello_world }</div>
         </>
     )
