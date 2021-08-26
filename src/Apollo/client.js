@@ -19,7 +19,7 @@ const AuthorizedApolloProvider = ({ children }) => {
     });
 
     const splitLink = split(
-        ({ query }) => {
+        ({ query }) => {git
             const definition = getMainDefinition(query);
             return (
                 definition.kind === 'OperationDefinition' &&
