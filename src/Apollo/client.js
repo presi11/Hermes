@@ -9,11 +9,11 @@ const AuthorizedApolloProvider = ({ children }) => {
     const { getAccessTokenSilently } = useAuth0();
 
     const httpLink = new createUploadLink({
-        uri: "http://localhost:8080/graphql",
+        uri: "https://domivo.herokuapp.com/graphql",
     });
 
     const wsLink = new WebSocketLink({
-        uri: "ws://localhost:8080/graphql",
+        uri: "wss://domivo.herokuapp.com/graphql",
         options: {
             reconnect: true
         }

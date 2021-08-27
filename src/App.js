@@ -10,8 +10,10 @@ import Lab from './Pages/Lab/Lab';
 import React from "react";
 import "./App.css";
 
-const App = () => {
 
+
+const App = () => {
+    
     const { isLoading } = useAuth0();
 
     if (isLoading) {
