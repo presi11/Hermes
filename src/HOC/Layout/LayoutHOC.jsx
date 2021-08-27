@@ -100,16 +100,6 @@ const LayoutHOC = ({ children }) => {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               )}
-              {isAuthenticated && (
-                <MDBNavbarItem>
-                  <MDBNavbarLink
-                    className={LayoutStyles.cursorPointer}
-                    onClick={() => redirect("lab")}
-                  >
-                    Testing Zone
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-              )}
             </MDBNavbarNav>
             <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
               <MDBNavbarItem>

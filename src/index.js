@@ -13,9 +13,6 @@ ReactDOM.render(
         audience={ process.env.REACT_APP_AUDIENCE }
         clientId={ process.env.REACT_APP_CLIENTID }
         redirectUri={ window.location.origin }
-        useRefreshTokens={true}
-        cacheLocation="localstorage"
-        scope="openid profile update:users"
     >
         <BrowserRouter>
             <App/>
