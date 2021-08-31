@@ -4,9 +4,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 
 const Profile = () => {
     const { user } = useAuth0();
-    console.log(user);
-    console.log(user["https://graphql-api/user_metadata"])
-    
+
     return (
         <>
             <div>

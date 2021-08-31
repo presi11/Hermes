@@ -21,7 +21,7 @@ const OrderCard = ({ pedent, order }) => {
           <MDBListGroup flush>
             { !orderId ? 
               <MDBListGroupItem>{orderId}</MDBListGroupItem> :"numero"}
-            <MDBListGroupItem>{created_at}</MDBListGroupItem>
+              <MDBListGroupItem>{created_at}</MDBListGroupItem>
           </MDBListGroup>
         </MDBCardBody>
       </MDBCard>
