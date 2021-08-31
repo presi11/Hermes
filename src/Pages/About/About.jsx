@@ -1,10 +1,16 @@
 import React from 'react'
-import logo from '../../Assets/logo-hermes_N.png'
+import Card from "../../Components/OrderCard/Card"
+import { MDBInput } from 'mdb-react-ui-kit';
+
+
 const About = () => {
     return (
         <div>
             This is about
-            <img src={logo} alt="Logo Hermes"/>
+            <Card></Card>
+            <MDBInput label='Example label' id='form1' type='text' />
+            
+
         </div>
     )
 }

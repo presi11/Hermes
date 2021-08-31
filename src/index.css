@@ -17,3 +17,6 @@ footer.page-footer {
     bottom: 0;
     width: 100%;
 }
+:root {
+    --toastify-color-progress-dark: linear-gradient(     to right,     #4cd964,     #5ac8fa,     #007aff,     #34aadc,     #5856d6,     #ff2d55   );;
+}

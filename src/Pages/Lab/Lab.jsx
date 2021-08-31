@@ -22,7 +22,6 @@ const Lab = () => {
             })
         }
         data.append('file', fileInput.current.files[0])
-        console.log(data);
         e.preventDefault();
     }
 

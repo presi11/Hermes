@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MDBDropdownToggle,
   MDBNavbarToggler,
@@ -19,6 +19,10 @@ import {
 import LayoutStyles from "./LayoutHOC.module.sass";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useSubscription } from "@apollo/client";
+import { newOrder } from "../../graphql/subscriptions";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const LayoutHOC = ({ children }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -33,8 +37,29 @@ const LayoutHOC = ({ children }) => {
     setIsOpen(!isOpen);
   };
 
+  const { data } = useSubscription(newOrder);
+  useEffect(() => {
+    if(data){
+      console.log(data)
+    toast.dark(` Ha llegado un nuevo pedido de: ${data.newOrder.menus[0].menu_detail.menu.name} 😊  `)
+  }
+  }, [data]);
+
+
   return (
     <div className={LayoutStyles.wrapper}>
+      <ToastContainer
+        onClick={()=> console.log("hola")}
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <MDBNavbar expand="lg" dark bgColor="dark">
         <MDBContainer fluid>
           <MDBNavbarBrand
@@ -107,6 +132,26 @@ const LayoutHOC = ({ children }) => {
                     onClick={() => redirect("lab")}
                   >
                     Testing Zone
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+              )}
+              {isAuthenticated && (
+                <MDBNavbarItem>
+                  <MDBNavbarLink
+                    className={LayoutStyles.cursorPointer}
+                    onClick={() => redirect("RestaurantForm")}
+                  >
+                    Restaurant
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+              )}
+              {isAuthenticated && (
+                <MDBNavbarItem>
+                  <MDBNavbarLink
+                    className={LayoutStyles.cursorPointer}
+                    onClick={() => redirect("MenusForm")}
+                  >
+                    Menus
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               )}
