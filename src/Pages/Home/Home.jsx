@@ -1,6 +1,7 @@
 import { HELLO } from '../../graphql/queries';
 import { useQuery } from '@apollo/client';
 import { MDBBtn } from 'mdb-react-ui-kit';
+import logo from '../../Assets/logo-hermes_N.png'
 import React from 'react';
 
 const Home = () => {
@@ -12,7 +13,7 @@ const Home = () => {
     return (
         <>
             <MDBBtn>Button</MDBBtn>
-            <img src="@/logo-hermes_sinF.png" alt="Logo hermes" />
+            <img src= {logo} alt="Logo hermes" />
             <div>{ data.hello_world }</div>
            
         </>
