@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { ORDERS } from "../../graphql/queries";
-import OrderCard from "../../Components/OrderCard/OrderCard";
+import SpacingGrid from "../../Components/Grid/Grid";
+import GridHOC from "../../HOC/Layout/GridHOC";
 import {
   MDBTabs,
   MDBTabsItem,
@@ -9,6 +10,7 @@ import {
   MDBTabsContent,
   MDBTabsPane,
 } from "mdb-react-ui-kit";
+
 
 const Orders = () => {
   const [justifyActive, setJustifyActive] = useState("tab1");
@@ -45,10 +47,13 @@ const Orders = () => {
       </MDBTabs>
 
       <MDBTabsContent>
+        
         <MDBTabsPane show={justifyActive === "tab1"}>
-          {data.orders.map((order, index) => (
-            <OrderCard key={index} order={order} pedent="Pediente"></OrderCard>
-          ))}
+          <GridHOC>
+            {data.orders.map((order, index) => (
+              <SpacingGrid key={index} order={order} />
+            ))}
+          </GridHOC>
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === "tab2"}>

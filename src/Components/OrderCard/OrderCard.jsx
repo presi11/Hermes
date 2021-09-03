@@ -16,8 +16,7 @@ import {
 // }
 
 const OrderCard = ({ order }) => {
-  const { orderId, created_at, user, } = order;
-
+  const { orderId, created_at, menus, user } = order;
 
   return (
     <>
@@ -44,7 +43,19 @@ const OrderCard = ({ order }) => {
             <MDBListGroupItem>
               <MDBCardText>{user}</MDBCardText>
             </MDBListGroupItem>
-            <MDBCardText>{order.menus.menu_detail}</MDBCardText>
+            <MDBListGroupItem>
+              <MDBCardText>
+                {menus.map((menuObj) => {
+                  const {
+                    menu_detail: {
+                      menu: { name, unit_price },
+                    },
+                  } = menuObj;
+                  console.log(name);
+                  return <p>{name} {unit_price}</p>
+                })}
+              </MDBCardText>
+            </MDBListGroupItem>
           </MDBListGroup>
 
           <MDBBtn href="#">Button</MDBBtn>
