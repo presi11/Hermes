@@ -47,9 +47,9 @@ const OrderCard = ({ order }) => {
               <MDBCardText>
                 {menus.map((menuObj) => {
                   const {
-                    menu_detail: {
+                  
                       menu: { name, unit_price },
-                    },
+               
                   } = menuObj;
                   console.log(name);
                   return <p>{name} {unit_price}</p>

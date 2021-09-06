@@ -6,14 +6,12 @@ export const ORDERS = gql`
       orderId
       created_at
       menus {
-        menu_detail {
-          menu {
-            name
-            estimated_time
-            unit_price
-          }
-          quantity
+        menu {
+          name
+          estimated_time
+          unit_price
         }
+        quantity
       }
       user
     }
