@@ -11,10 +11,6 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 
-// function isactive() {
-
-// }
-
 const OrderCard = ({ order }) => {
   const { orderId, created_at, menus, user } = order;
 
@@ -51,7 +47,6 @@ const OrderCard = ({ order }) => {
                       menu: { name, unit_price },
                
                   } = menuObj;
-                  console.log(name);
                   return <p>{name} {unit_price}</p>
                 })}
               </MDBCardText>

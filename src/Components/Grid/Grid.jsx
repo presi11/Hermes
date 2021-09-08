@@ -4,7 +4,6 @@ import OrderCard from "../../Components/OrderCard/OrderCard";
 
 
 export default function SpacingGrid({order}) {
-    console.log(order)
 
   return (
     <Grid  item>

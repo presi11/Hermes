@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { ORDERS } from "../../graphql/queries";
+import { useAuth0 } from "@auth0/auth0-react";
+import { STATUSORDERS } from "../../graphql/queries";
 import SpacingGrid from "../../Components/Grid/Grid";
 import GridHOC from "../../HOC/Layout/GridHOC";
 import {
@@ -11,7 +12,6 @@ import {
   MDBTabsPane,
 } from "mdb-react-ui-kit";
 
-
 const Orders = () => {
   const [justifyActive, setJustifyActive] = useState("tab1");
 
@@ -21,10 +21,34 @@ const Orders = () => {
     }
     setJustifyActive(value);
   };
-  const { loading, error, data } = useQuery(ORDERS);
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  const { user } = useAuth0();
+  const userMetadata = user["https://graphql-api/user_metadata"];
 
+  const {
+    data: Sorders,
+    error: Sorderserror,
+    loading: Sordersloading,
+  } = useQuery(STATUSORDERS, {
+    variables: {
+      orderRestaurantName: userMetadata.restaurant,
+      orderStatus: "Confirmado",
+    },
+  });
+
+  const {
+    data: Eorders,
+    error: Eorderserror,
+    loading: Eordersloading,
+  } = useQuery(STATUSORDERS, {
+    variables: { orderRestaurantName: "Pizzas Joty", orderStatus: "Entregado" },
+  });
+
+  if (Eordersloading) return "Loading...";
+  if (Sordersloading) return "Loading...";
+  if (Sorderserror) return `Error! ${Sorderserror.message}`;
+  if (Eorderserror) return `Error! ${Eorderserror.message}`;
+
+  
   return (
     <>
       <MDBTabs justify className="mb-3">
@@ -45,19 +69,21 @@ const Orders = () => {
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
-
       <MDBTabsContent>
-        
         <MDBTabsPane show={justifyActive === "tab1"}>
           <GridHOC>
-            {data.orders.map((order, index) => (
+            {Sorders.order.map((order, index) => (
               <SpacingGrid key={index} order={order} />
             ))}
           </GridHOC>
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === "tab2"}>
-          Historial de todos los Pedidos
+          <GridHOC>
+            {Eorders.order.map((order, index) => (
+              <SpacingGrid key={index} order={order} />
+            ))}
+          </GridHOC>
         </MDBTabsPane>
       </MDBTabsContent>
     </>
