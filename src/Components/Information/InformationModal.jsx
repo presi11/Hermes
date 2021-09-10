@@ -78,7 +78,7 @@ const InformationModal = ({ order }) => {
                         <tr key={index}>
                           <th scope="row">{estimated_time}</th>
                           <td>{name}</td>
-                          <td>{menus[0].quantity}</td>
+                          <td>{menus[index].quantity}</td>
                           <td>{unit_price}</td>
                         </tr>
                       );
