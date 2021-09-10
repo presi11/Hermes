@@ -1,23 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const ORDERS = gql`
-  query Query {
-    orders {
-      orderId
-      created_at
-      menus {
-        menu {
-          name
-          estimated_time
-          unit_price
-        }
-        quantity
-      }
-      user
-    }
-  }
-`;
-
 export const STATUSORDERS = gql`
 query Query($orderRestaurantName: String!, $orderStatus: OrderStatus) {
   order(restaurantName: $orderRestaurantName, status: $orderStatus) {
@@ -32,6 +14,7 @@ query Query($orderRestaurantName: String!, $orderStatus: OrderStatus) {
         quantity
       }
       user
+      status
     }
   }
 `;
