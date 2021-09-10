@@ -30,7 +30,7 @@ const InformationModal = ({ order }) => {
       <MDBModal
         tabIndex="-1"
         show={gridModal}
-        getOpenState={(e: any) => setGridModal(e)}
+        getOpenState={(e) => setGridModal(e)}
       >
         <MDBModalDialog>
           <MDBModalContent>
