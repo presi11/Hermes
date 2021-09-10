@@ -28,7 +28,7 @@ const Orders = () => {
     error: orderserror,
     loading: ordersloading,
   } = useQuery(STATUSORDERS, {
-    variables: { orderRestaurantName: userMetadata.restaurant, orderStatus: "ENTREGADO" },
+    variables: { orderRestaurantName: userMetadata.restaurant, orderStatus: "CONFIRMADO" },
   });
   
   const {
@@ -37,7 +37,7 @@ const Orders = () => {
     loading: ordersEloading,
   } = useQuery(STATUSORDERS, {
     variables: {
-      orderRestaurantName: userMetadata.restaurant, orderStatus:"CONFIRMADO"
+      orderRestaurantName: userMetadata.restaurant, orderStatus:"ENTREGADO"
       
     },
   });
