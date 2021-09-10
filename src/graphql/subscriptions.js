@@ -5,11 +5,9 @@ export const newOrder = gql`
     newOrder(restaurant: $newOrderRestaurant) {
       orderId
       menus {
-        menu_detail {
-          menu {
-            name
-            estimated_time
-          }
+        menu {
+          name
+          estimated_time
         }
       }
     }
