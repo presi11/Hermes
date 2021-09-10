@@ -41,7 +41,6 @@ const Orders = () => {
       
     },
   });
-  console.log(userMetadata.restaurant);
 
   if (ordersloading) return "Loading...";
   if (ordersEloading) return "Loading...";

@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   MDBCard,
   MDBCardBody,
@@ -7,9 +8,9 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
+import InformationModal from "../Information/InformationModal";
 
 const OrderCard = ({ order }) => {
   const { orderId, created_at, menus, user } = order;
@@ -52,8 +53,7 @@ const OrderCard = ({ order }) => {
               </MDBCardText>
             </MDBListGroupItem>
           </MDBListGroup>
-
-          <MDBBtn href="#">Button</MDBBtn>
+          <InformationModal order={order}> </InformationModal>
         </MDBCardBody>
       </MDBCard>
     </>
