@@ -41,13 +41,13 @@ const OrderCard = ({ order }) => {
             </MDBListGroupItem>
             <MDBListGroupItem>
               <MDBCardText>
-                {menus.map((menuObj) => {
+                {menus.map((menuObj, index) => {
                   const {
                   
                       menu: { name, unit_price },
                
                   } = menuObj;
-                  return <p>{name} {unit_price}</p>
+                  return <span key={index} >{name} {unit_price}</span>
                 })}
               </MDBCardText>
             </MDBListGroupItem>

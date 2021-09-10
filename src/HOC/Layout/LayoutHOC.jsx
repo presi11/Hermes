@@ -39,6 +39,7 @@ const LayoutHOC = ({ children }) => {
 
   const { data } = useSubscription(newOrder);
   useEffect(() => {
+    console.log("hi");
     if(data){
       console.log(data)
     toast.dark(` Ha llegado un nuevo pedido de: ${data.newOrder.menus[0].menu_detail.menu.name} 😊  `)

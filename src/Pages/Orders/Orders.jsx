@@ -23,32 +23,32 @@ const Orders = () => {
   };
   const { user } = useAuth0();
   const userMetadata = user["https://graphql-api/user_metadata"];
-
   const {
-    data: Sorders,
-    error: Sorderserror,
-    loading: Sordersloading,
+    data: orders,
+    error: orderserror,
+    loading: ordersloading,
+  } = useQuery(STATUSORDERS, {
+    variables: { orderRestaurantName: userMetadata.restaurant, orderStatus: "ENTREGADO" },
+  });
+  
+  const {
+    data: ordersE,
+    error: ordersEserror,
+    loading: ordersEloading,
   } = useQuery(STATUSORDERS, {
     variables: {
-      orderRestaurantName: userMetadata.restaurant,
-      orderStatus: "Confirmado",
+      orderRestaurantName: userMetadata.restaurant, orderStatus:"CONFIRMADO"
+      
     },
   });
+  console.log(userMetadata.restaurant);
 
-  const {
-    data: Eorders,
-    error: Eorderserror,
-    loading: Eordersloading,
-  } = useQuery(STATUSORDERS, {
-    variables: { orderRestaurantName: "Pizzas Joty", orderStatus: "Entregado" },
-  });
+  if (ordersloading) return "Loading...";
+  if (ordersEloading) return "Loading...";
+  if (ordersEserror) return `Error! ${ordersEserror.message}`;
+  if (orderserror) return `Error! ${orderserror.message}`;
 
-  if (Eordersloading) return "Loading...";
-  if (Sordersloading) return "Loading...";
-  if (Sorderserror) return `Error! ${Sorderserror.message}`;
-  if (Eorderserror) return `Error! ${Eorderserror.message}`;
 
-  
   return (
     <>
       <MDBTabs justify className="mb-3">
@@ -72,7 +72,7 @@ const Orders = () => {
       <MDBTabsContent>
         <MDBTabsPane show={justifyActive === "tab1"}>
           <GridHOC>
-            {Sorders.order.map((order, index) => (
+            {orders.order.map((order, index) => (
               <SpacingGrid key={index} order={order} />
             ))}
           </GridHOC>
@@ -80,7 +80,7 @@ const Orders = () => {
 
         <MDBTabsPane show={justifyActive === "tab2"}>
           <GridHOC>
-            {Eorders.order.map((order, index) => (
+            {ordersE.order.map((order, index) => (
               <SpacingGrid key={index} order={order} />
             ))}
           </GridHOC>

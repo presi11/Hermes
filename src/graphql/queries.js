@@ -19,8 +19,8 @@ export const ORDERS = gql`
 `;
 
 export const STATUSORDERS = gql`
-  query Query($orderRestaurantName: String!, $orderStatus: String) {
-    order(restaurantName: $orderRestaurantName, status: $orderStatus) {
+query Query($orderRestaurantName: String!, $orderStatus: OrderStatus) {
+  order(restaurantName: $orderRestaurantName, status: $orderStatus) {
       orderId
       created_at
       menus {
