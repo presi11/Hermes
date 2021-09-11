@@ -3,17 +3,19 @@ import React from "react";
 import {
   MDBCard,
   MDBCardBody,
-  MDBListGroupItem,
   MDBListGroup,
   MDBCardTitle,
-  MDBCardText,
   MDBCardImage,
   MDBRipple,
+  MDBCardFooter,
+  MDBTableHead,
+  MDBTable,
+  MDBTableBody,
 } from "mdb-react-ui-kit";
 import InformationModal from "../Information/InformationModal";
 
 const OrderCard = ({ order }) => {
-  const { orderId, created_at, menus, user } = order;
+  const { orderId, menus, user, status } = order;
 
   return (
     <>
@@ -24,35 +26,63 @@ const OrderCard = ({ order }) => {
           className="bg-image hover-overlay"
         >
           <MDBCardImage
-            src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.jpg"
+            src="https://i.ibb.co/G2vwd9f/Costilla-en-salsa-BBQ-Asados-la-80.jpg"
             fluid
             alt="..."
           />
         </MDBRipple>
         <MDBCardBody>
-          {orderId ? (
-            <MDBCardTitle>{`Pedido #${orderId}`} </MDBCardTitle>
-          ) : (
-            "Numero del pedido"
-          )}
+          <div className="row">
+            <div className="col-md-5 col-example">
+              {orderId ? (
+                <MDBCardTitle>{`Pedido #${orderId}`} </MDBCardTitle>
+              ) : (
+                "Numero del pedido"
+              )}
+            </div>
+            <div className="col-md-5 ms-auto col-example">
+              <h6>{user}</h6>
+            </div>
+          </div>
+
           <MDBListGroup flush>
-            <MDBListGroupItem>{created_at}</MDBListGroupItem>
-            <MDBListGroupItem>
-              <MDBCardText>{user}</MDBCardText>
-            </MDBListGroupItem>
-            <MDBListGroupItem>
-              <MDBCardText>
+            <div className="container-fluid bd-example-row">
+              <div className="row">
+                <div className="col-md-12 ms-auto col-example">
+                  Estado: {status}
+                </div>
+                {status === "CONFIRMADO" ? (
+                  <div className="col-md-12 ms-auto col-example">
+                    Estimado: {orderId}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </MDBListGroup>
+          <MDBCardFooter>
+            <MDBTable bordered borderColor="black">
+              <MDBTableHead dark>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                </tr>
+              </MDBTableHead>
+              <MDBTableBody>
                 {menus.map((menuObj, index) => {
                   const {
-                  
-                      menu: { name, unit_price },
-               
+                    menu: { name },
                   } = menuObj;
-                  return <span key={index} >{name} {unit_price}</span>
+
+                  return (
+                    <tr key={index}>
+                      <th scope="row">{name}</th>
+                      <td>{menus[index].quantity}</td>
+                    </tr>
+                  );
                 })}
-              </MDBCardText>
-            </MDBListGroupItem>
-          </MDBListGroup>
+              </MDBTableBody>
+            </MDBTable>
+          </MDBCardFooter>
           <InformationModal order={order}> </InformationModal>
         </MDBCardBody>
       </MDBCard>
