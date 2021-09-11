@@ -9,6 +9,10 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
+  MDBTable,
+  MDBTableHead,
+  MDBTableBody
+
 } from "mdb-react-ui-kit";
 
 const InformationModal = ({ order }) => {
@@ -59,16 +63,16 @@ const InformationModal = ({ order }) => {
                     Estado: {status}
                   </div>
                 </div>
-                <table className="table table-hover">
-                  <thead>
+                <MDBTable bordered borderColor="black">
+                <MDBTableHead dark>
                     <tr>
                       <th>Estimado</th>
                       <th>Nombre</th>
                       <th>Cantidad</th>
                       <th>Precio</th>
                     </tr>
-                  </thead>
-                  <tbody>
+                  </MDBTableHead>
+                  <MDBTableBody>
                     {menus.map((menuObj, index) => {
                       const {
                         menu: { name, unit_price, estimated_time },
@@ -83,8 +87,8 @@ const InformationModal = ({ order }) => {
                         </tr>
                       );
                     })}
-                  </tbody>
-                </table>
+                  </MDBTableBody>
+                </MDBTable>
                 <hr />
 
                 <div className="row">

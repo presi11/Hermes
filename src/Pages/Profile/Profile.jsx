@@ -23,7 +23,7 @@ const Profile = () => {
                 />
                 
             </h2>
-           <h2>{userMetadata.restaurant}</h2>
+           <h2>Restaurante: {userMetadata.restaurant}</h2>
             <p>{ user.email }</p>
         </>
     )
