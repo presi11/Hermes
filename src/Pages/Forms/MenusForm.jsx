@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
-import { useMutation } from "@apollo/client";
-import { UPLOAD_FILE, menus } from "../../graphql/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import { MENUS } from "../../graphql/mutations";
+import { RESTAURANT } from "../../graphql/queries";
 import { MDBInput } from "mdb-react-ui-kit";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Lab = () => {
-  const { user } = useAuth0();
-  const name_restaurant = user["https://graphql-api/user_metadata"];
+const Menuform = () => {
+
+
   const [formState, setFormState] = useState({
     name: "",
     description: "",
@@ -16,129 +17,143 @@ const Lab = () => {
     estimated_time: "",
     picture: "",
   });
+
   const fileInput = useRef();
-  const [uploadFile] = useMutation(UPLOAD_FILE);
+  const [CreateMenu, {data, error}] = useMutation(MENUS);
+  console.log(data);
+  console.log(error);
+  const { user } = useAuth0();
+  const userMetadata = user["https://graphql-api/user_metadata"];
+  
+  const {
+    loading:loadingRestaurant,
+    error:ErrorRestaurant,
+    data: dataRestaurant,
+  } = useQuery(RESTAURANT, {
+    variables: { restaurantRestaurantName: userMetadata.restaurant },
+  });
 
   const handleSubmit = (e) => {
     const data = new FormData();
     const {
       current: {
         validity,
-        files: [file],
+        files: [picture],
       },
     } = fileInput;
+
     if (validity.valid) {
-      uploadFile({
-        variables: { file },
-        onCompleted(data) {
-        },
-      });
+      //uploadFile({
+      //  variables: { file },
+      //  onCompleted(data) {
+      //  },
+      //});
     }
+    CreateMenu({
+      variables: {
+        menuInput: {
+          name: formState.name,
+          description: formState.description,
+          unit_price: formState.unit_price,
+          categories: [formState.categories],
+          restaurant: dataRestaurant.restaurant,
+          estimated_time: formState.estimated_time,
+          picture,
+        },
+      },
+
+    });
     data.append("file", fileInput.current.files[0]);
     e.preventDefault();
   };
 
-  const [CreateMenu] = useMutation(menus, {
-    variables: {
-      menutInput: {
-        name: formState.name,
-        description: formState.description,
-        unit_price: formState.unit_price,
-        categories: [formState.categories],
-        restaurant: name_restaurant,
-        estimated_time: formState.estimated_time,
-        picture: null,
-      },
-    },
-  });
+  if (loadingRestaurant) return "Loading...";
+  if (ErrorRestaurant) return `Error! ${ErrorRestaurant.message}`;
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-        CreateMenu();
-      }}
-    ><div style={{ width: '23rem' }}>
-      <MDBInput
-        value={formState.name}
-        onChange={(e) =>
-          setFormState({
-            ...formState,
-            name: e.target.value,
-          })
-        }
-        label="Nombre"
-        id="formControlDefault"
-        type="text"
-        size="lg"
-      />
+    onSubmit={handleSubmit}
+    >
+      <div style={{ width: "23rem" }}>
+        <MDBInput
+          value={formState.name}
+          onChange={(e) =>
+            setFormState({
+              ...formState,
+              name: e.target.value,
+            })
+          }
+          label="Nombre"
+          id="formControlDefault"
+          type="text"
+          size="lg"
+        />
 
-      <br />
-      <MDBInput
-        value={formState.description}
-        onChange={(e) =>
-          setFormState({
-            ...formState,
-            description: e.target.value,
-          })
-        }
-        label="Descripción"
-        id="formControlDefault"
-        type="text"
-        size="lg"
-      />
+        <br />
+        <MDBInput
+          value={formState.description}
+          onChange={(e) =>
+            setFormState({
+              ...formState,
+              description: e.target.value,
+            })
+          }
+          label="Descripción"
+          id="formControlDefault"
+          type="text"
+          size="lg"
+        />
 
-      <br />
+        <br />
 
-      <MDBInput
-        value={formState.unit_price}
-        onChange={(e) =>
-          setFormState({
-            ...formState,
-            unit_price: e.target.value,
-          })
-        }
-        label="Precio por unidad"
-        id="formControlDefault"
-        type="text"
-        size="lg"
-      />
+        <MDBInput
+          value={formState.unit_price}
+          onChange={(e) =>
+            setFormState({
+              ...formState,
+              unit_price: e.target.value,
+            })
+          }
+          label="Precio por unidad"
+          id="formControlDefault"
+          type="text"
+          size="lg"
+        />
 
-      <br />
+        <br />
 
-      <MDBInput
-        value={formState.categories}
-        onChange={(e) =>
-          setFormState({
-            ...formState,
-            categories: e.target.value,
-          })
-        }
-        label="Categorias"
-        id="formControlDefault"
-        type="text"
-        size="lg"
-      />
+        <MDBInput
+          value={formState.categories}
+          onChange={(e) =>
+            setFormState({
+              ...formState,
+              categories: e.target.value,
+            })
+          }
+          label="Categorias"
+          id="formControlDefault"
+          type="text"
+          size="lg"
+        />
 
-      <br />
+        <br />
 
-      <MDBInput
-        value={formState.estimated_time}
-        onChange={(e) =>
-          setFormState({
-            ...formState,
-            estimated_time: e.target.value,
-          })
-        }
-        label="Tiempo estimado"
-        id="formControlDefault"
-        type="text"
-        size="lg"
-      />
+        <MDBInput
+          value={formState.estimated_time}
+          onChange={(e) =>
+            setFormState({
+              ...formState,
+              estimated_time: e.target.value,
+            })
+          }
+          label="Tiempo estimado"
+          id="formControlDefault"
+          type="text"
+          size="lg"
+        />
 
-      <br />
-        </div>
+        <br />
+      </div>
       <label className="form-label" htmlFor="customFile">
         File input - Drive Integration
       </label>
@@ -153,4 +168,4 @@ const Lab = () => {
   );
 };
 
-export default Lab;
+export default Menuform;

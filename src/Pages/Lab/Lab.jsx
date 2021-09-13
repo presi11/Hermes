@@ -6,21 +6,23 @@ const Lab = () => {
     const fileInput = useRef();
     const [uploadFile] = useMutation(UPLOAD_FILE);
 
+    console.log(fileInput);
     const handleSubmit = (e) => {
+
+
         const data = new FormData();
         const {
             current: {
-                validity,
                 files: [file],
             }
         } = fileInput;
-        if (validity.valid) {
+     
             uploadFile({
                 variables: { file }, onCompleted(data) {
                     console.log(data);
                 }
             })
-        }
+       
         data.append('file', fileInput.current.files[0])
         e.preventDefault();
     }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { MDBInput } from "mdb-react-ui-kit";
-import { restaurant } from "../../graphql/mutations";
+import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
+import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
 
 const RestaurantForm = () => {
@@ -16,7 +16,7 @@ const RestaurantForm = () => {
     schedule_hours_close: "",
     attributes: "",
   });
-  const [CreateRestaurant] = useMutation(restaurant, {
+  const [CreateRestaurant] = useMutation(RESTAURANT, {
     variables: {
       restaurantInput: {
         name: formState.name,
@@ -178,7 +178,8 @@ const RestaurantForm = () => {
             type="text"
           />
         </div>
-        <button type="submit">Submit</button>
+        <br/>
+        <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
       </form>
     </div>
   );

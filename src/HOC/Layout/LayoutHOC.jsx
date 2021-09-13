@@ -16,20 +16,21 @@ import {
   MDBFooter,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import InformationModal from "../../Components/Information/InformationModal";
 import LayoutStyles from "./LayoutHOC.module.sass";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSubscription } from "@apollo/client";
 import { newOrder } from "../../graphql/subscriptions";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const LayoutHOC = ({ children }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [showNav, setShowNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
-
+  const [gridModal, setGridModal] = useState(false);
   const redirect = (route) => history.push(`/${route}`);
 
   const toggle = (e) => {
@@ -39,16 +40,17 @@ const LayoutHOC = ({ children }) => {
 
   const { data } = useSubscription(newOrder);
   useEffect(() => {
-    if(data){
-    toast.dark(` Ha llegado un nuevo pedido de: ${data.newOrder.menus[0].menu.name} 😊  `)
-  }
+    if (data) {
+      toast.dark(
+        ` Ha llegado un nuevo pedido de: ${data.newOrder.menus[0].menu.name} 😊  `
+      );
+    }
   }, [data]);
-
 
   return (
     <div className={LayoutStyles.wrapper}>
       <ToastContainer
-        onClick={()=> console.log("hola")}
+        onClick={() => setGridModal(true)}
         position="top-left"
         autoClose={5000}
         hideProgressBar={false}
@@ -264,6 +266,13 @@ const LayoutHOC = ({ children }) => {
           </section>
         </div>
       </MDBFooter>
+      {data &&
+        <InformationModal
+          order={data.newOrder}
+          gridModal={gridModal}
+          setGridModal={setGridModal}
+        />
+      }
     </div>
   );
 };
