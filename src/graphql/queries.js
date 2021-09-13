@@ -10,11 +10,13 @@ export const STATUSORDERS = gql`
           name
           estimated_time
           unit_price
+          picture
         }
         quantity
       }
       user
       status
+      
     }
   }
 `;
