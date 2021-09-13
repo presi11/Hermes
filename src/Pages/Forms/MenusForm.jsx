@@ -20,8 +20,8 @@ const Menuform = () => {
 
   const fileInput = useRef();
   const [CreateMenu, {data, error}] = useMutation(MENUS);
-  console.log(data);
-  console.log(error);
+ 
+ 
   const { user } = useAuth0();
   const userMetadata = user["https://graphql-api/user_metadata"];
   
@@ -32,7 +32,7 @@ const Menuform = () => {
   } = useQuery(RESTAURANT, {
     variables: { restaurantRestaurantName: userMetadata.restaurant },
   });
-
+  if (error) return `Error! ${error.message}`;
   const handleSubmit = (e) => {
     const data = new FormData();
     const {

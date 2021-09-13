@@ -16,10 +16,8 @@ import {
 import InformationModal from "../Information/InformationModal";
 
 const OrderCard = ({ order }) => {
-  console.log(order);
   const [gridModal, setGridModal] = useState(false);
   const { orderId, menus, user, status } = order;
-
   return (
     <>
       <MDBCard style={{ maxWidth: "22rem" }}>
@@ -32,7 +30,6 @@ const OrderCard = ({ order }) => {
             const {
               menu: { picture },
             } = menuObj;
-
             return <MDBCardImage key={index} src={picture} fluid alt="..." />;
           })}
         </MDBRipple>
@@ -90,7 +87,6 @@ const OrderCard = ({ order }) => {
             </MDBTable>
           </MDBCardFooter>
           <MDBBtn onClick={()=>setGridModal(!gridModal)}>Orden</MDBBtn>
-          {console.log(order)}
           <InformationModal order={order} gridModal ={gridModal} setGridModal={setGridModal} > </InformationModal>
         </MDBCardBody>
       </MDBCard>
