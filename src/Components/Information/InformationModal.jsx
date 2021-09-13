@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   MDBBtn,
@@ -15,12 +15,12 @@ import {
 
 } from "mdb-react-ui-kit";
 
-const InformationModal = ({ order }) => {
+const InformationModal = ({ order, gridModal, setGridModal }) => {
   const { orderId, created_at, menus, user, status } = order;
-  const [gridModal, setGridModal] = useState(false);
+ 
 
   const toggleShow = () => setGridModal(!gridModal);
-
+ 
   let total = 0;
 
   for (let i = 0; i < menus.length; i++) {
@@ -29,7 +29,8 @@ const InformationModal = ({ order }) => {
 
   return (
     <>
-      <MDBBtn onClick={toggleShow}>Orden</MDBBtn>
+      
+      
 
       <MDBModal
         tabIndex="-1"

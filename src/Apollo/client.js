@@ -5,6 +5,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { setContext } from 'apollo-link-context';
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const AuthorizedApolloProvider = ({ children }) => {
     const { getAccessTokenSilently } = useAuth0();
 
@@ -43,7 +44,7 @@ const AuthorizedApolloProvider = ({ children }) => {
 
     const apolloClient = new ApolloClient({
         link: ApolloLink.from([authMiddleware, splitLink]),
-        cache: new InMemoryCache()
+        cache: new InMemoryCache({addTypename:false})
     });
 
     return (

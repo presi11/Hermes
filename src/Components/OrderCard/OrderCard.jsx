@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import {
   MDBCard,
@@ -11,10 +11,13 @@ import {
   MDBTableHead,
   MDBTable,
   MDBTableBody,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import InformationModal from "../Information/InformationModal";
 
 const OrderCard = ({ order }) => {
+  console.log(order);
+  const [gridModal, setGridModal] = useState(false);
   const { orderId, menus, user, status } = order;
 
   return (
@@ -25,12 +28,15 @@ const OrderCard = ({ order }) => {
           rippleTag="div"
           className="bg-image hover-overlay"
         >
-          <MDBCardImage
-            src="https://i.ibb.co/G2vwd9f/Costilla-en-salsa-BBQ-Asados-la-80.jpg"
-            fluid
-            alt="..."
-          />
+          {menus.map((menuObj, index) => {
+            const {
+              menu: { picture },
+            } = menuObj;
+
+            return <MDBCardImage key={index} src={picture} fluid alt="..." />;
+          })}
         </MDBRipple>
+
         <MDBCardBody>
           <div className="row">
             <div className="col-md-5 col-example">
@@ -83,7 +89,9 @@ const OrderCard = ({ order }) => {
               </MDBTableBody>
             </MDBTable>
           </MDBCardFooter>
-          <InformationModal order={order}> </InformationModal>
+          <MDBBtn onClick={()=>setGridModal(!gridModal)}>Orden</MDBBtn>
+          {console.log(order)}
+          <InformationModal order={order} gridModal ={gridModal} setGridModal={setGridModal} > </InformationModal>
         </MDBCardBody>
       </MDBCard>
     </>
