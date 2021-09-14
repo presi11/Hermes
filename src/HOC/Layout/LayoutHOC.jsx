@@ -25,7 +25,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Toast from "../../Components/Toast/Toast";
 
 const LayoutHOC = ({ children }) => {
-  const {  loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const {  loginWithRedirect, logout, isAuthenticated  } = useAuth0();
   const [showNav, setShowNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -41,7 +41,9 @@ const LayoutHOC = ({ children }) => {
 
   return (
     <div className={LayoutStyles.wrapper}>
+      {isAuthenticated&&
       <Toast></Toast>
+      }
       <MDBNavbar expand="lg" dark bgColor="dark">
         <MDBContainer fluid>
           <MDBNavbarBrand
