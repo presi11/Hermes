@@ -11,16 +11,14 @@ import {
   MDBModalFooter,
   MDBTable,
   MDBTableHead,
-  MDBTableBody
-
+  MDBTableBody,
 } from "mdb-react-ui-kit";
 
 const InformationModal = ({ order, gridModal, setGridModal }) => {
   const { orderId, created_at, menus, user, status } = order;
- 
 
   const toggleShow = () => setGridModal(!gridModal);
- 
+
   let total = 0;
 
   for (let i = 0; i < menus.length; i++) {
@@ -29,9 +27,6 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
 
   return (
     <>
-      
-      
-
       <MDBModal
         tabIndex="-1"
         show={gridModal}
@@ -65,7 +60,7 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
                   </div>
                 </div>
                 <MDBTable bordered borderColor="black">
-                <MDBTableHead dark>
+                  <MDBTableHead dark>
                     <tr>
                       <th>Estimado</th>
                       <th>Nombre</th>
@@ -103,6 +98,9 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
               </div>
             </MDBModalBody>
             <MDBModalFooter>
+              <MDBBtn color="warning" onClick={toggleShow}>
+                Enviado
+              </MDBBtn>
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Cerrar
               </MDBBtn>
