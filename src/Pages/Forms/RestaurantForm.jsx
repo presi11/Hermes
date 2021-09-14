@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
 import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
+import CompleteForm from "../../Components/Information/CompleteForm";
 
 const RestaurantForm = () => {
+  const [gridModal, setGridModal] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
     address: "",
@@ -16,7 +18,8 @@ const RestaurantForm = () => {
     schedule_hours_close: "",
     attributes: "",
   });
-  const [CreateRestaurant] = useMutation(RESTAURANT, {
+  const [CreateRestaurant ,{ data, error }] = useMutation(RESTAURANT, {
+    
     variables: {
       restaurantInput: {
         name: formState.name,
@@ -39,7 +42,7 @@ const RestaurantForm = () => {
       },
     },
   });
-
+  if (error) return `Error! ${error.message}`;
   return (
     <div>
       <form
@@ -47,6 +50,7 @@ const RestaurantForm = () => {
           e.preventDefault();
 
           CreateRestaurant();
+          setGridModal(!gridModal);
         }}
       >
         <div style={{ width: "23rem" }}>
@@ -181,6 +185,13 @@ const RestaurantForm = () => {
         <br/>
         <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
       </form>
+      {data && (
+        <CompleteForm
+          data={data.restaurant}
+          gridModal={gridModal}
+          setGridModal={setGridModal}
+        ></CompleteForm>
+      )}
     </div>
   );
 };
