@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Toast = () => {
   const { user } = useAuth0();
+  const google = user.sub;
   const userMetadata = user["https://graphql-api/user_metadata"];
   const [gridModal, setGridModal] = useState(false);
   const { data } = useSubscription(newOrder, {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   MDBDropdownToggle,
   MDBNavbarToggler,
@@ -16,16 +16,16 @@ import {
   MDBFooter,
   MDBIcon,
 } from "mdb-react-ui-kit";
-
 import LayoutStyles from "./LayoutHOC.module.sass";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-
-
-import Toast from "../../Components/Toast/Toast";
+import { useSubscription } from "@apollo/client";
+import { newOrder } from "../../graphql/subscriptions";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const LayoutHOC = ({ children }) => {
-  const {  loginWithRedirect, logout, isAuthenticated  } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [showNav, setShowNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -37,13 +37,31 @@ const LayoutHOC = ({ children }) => {
     setIsOpen(!isOpen);
   };
 
+  const { data } = useSubscription(newOrder);
+  console.log(data);
+  useEffect(() => {
+    console.log("hi");
+    if(data){
+      console.log(data)
+    toast.dark(` Ha llegado un nuevo pedido de: ${data.newOrder.menus[0].menu.name} 😊  `)
+  }
+  }, [data]);
 
 
   return (
     <div className={LayoutStyles.wrapper}>
-      {isAuthenticated&&
-      <Toast></Toast>
-      }
+      <ToastContainer
+        onClick={()=> console.log("hola")}
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <MDBNavbar expand="lg" dark bgColor="dark">
         <MDBContainer fluid>
           <MDBNavbarBrand
