@@ -25,7 +25,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Toast from "../../Components/Toast/Toast";
 
 const LayoutHOC = ({ children }) => {
-  const {  loginWithRedirect, logout, isAuthenticated  } = useAuth0();
+  const { user, loginWithRedirect, logout, isAuthenticated  } = useAuth0();
+  const userMetadata = user["https://graphql-api/user_metadata"];
+  const Rol = userMetadata.rol;
+  console.log(Rol);
   const [showNav, setShowNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -109,7 +112,7 @@ const LayoutHOC = ({ children }) => {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               )}
-              {isAuthenticated && (
+              {isAuthenticated && Rol === "admin" &&  (
                 <MDBNavbarItem>
                   <MDBNavbarLink
                     className={LayoutStyles.cursorPointer}
