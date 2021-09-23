@@ -6,6 +6,7 @@ import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { useAuth0 } from "@auth0/auth0-react";
 import CompleteForm from "../../Components/Information/CompleteForm";
 
+
 const Menuform = () => {
   const [gridModal, setGridModal] = useState(false);
   const [formState, setFormState] = useState({
@@ -148,9 +149,10 @@ const Menuform = () => {
           <br />
         </div>
         <label className="form-label" htmlFor="customFile">
-          File input - Drive Integration
+          Imagen del menu
         </label>
         <input
+        
           type="file"
           className="form-control"
           id="customFile"

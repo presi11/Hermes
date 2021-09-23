@@ -25,6 +25,7 @@ const Toast = () => {
       );
     }
   }, [data]);
+  
   return (
       <>
     <ToastContainer
@@ -45,6 +46,7 @@ const Toast = () => {
           order={data.newOrder}
           gridModal={gridModal}
           setGridModal={setGridModal}
+          
         />
       )}
       </>

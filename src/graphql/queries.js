@@ -40,6 +40,20 @@ query Query($restaurantRestaurantName: String!) {
 }
 `;
 
+export const METADATA = gql`
+query Query($userUserId: String!) {
+  user(userId: $userUserId) {
+    name
+    user_metadata {
+      restaurant
+    }
+    app_metadata {
+      roles
+    }
+  }
+}
+`;
+
 export const HELLO = gql`
   query hello_world {
     hello_world

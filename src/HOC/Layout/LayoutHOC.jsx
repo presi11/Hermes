@@ -127,7 +127,7 @@ const LayoutHOC = ({ children }) => {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               )}
-              {isAuthenticated && (
+              {isAuthenticated &&   (
                 <MDBNavbarItem>
                   <MDBNavbarLink
                     className={LayoutStyles.cursorPointer}
