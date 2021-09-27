@@ -15,6 +15,10 @@ COPY package.json /app
 
 RUN npm install
 
+RUN npx npm-force-resolutions
+
+RUN npm install
+
 COPY . /app
 
 RUN npm run build
