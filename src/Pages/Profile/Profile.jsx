@@ -4,6 +4,9 @@ import { MDBIcon } from "mdb-react-ui-kit";
 
 const Profile = () => {
     const { user } = useAuth0();
+    const userMetadata = user["https://graphql-api/user_metadata"];
+    
+
     return (
         <>
             <div>
@@ -18,7 +21,9 @@ const Profile = () => {
                     fas icon="check-circle"
                     color={ user.email_verified ? 'success' : 'dark' }
                 />
+                
             </h2>
+           <h2>Restaurante: {userMetadata.restaurant}</h2>
             <p>{ user.email }</p>
         </>
     )

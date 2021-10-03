@@ -1,6 +1,6 @@
 # Step 1
 
-FROM node:10-alpine as build-step
+FROM node:14-alpine as build-step
 
 RUN mkdir /app
 ARG REACT_APP_CLIENTID
@@ -12,6 +12,10 @@ ENV REACT_APP_AUDIENCE $REACT_APP_AUDIENCE
 WORKDIR /app
 
 COPY package.json /app
+
+RUN npm install
+
+RUN npx npm-force-resolutions
 
 RUN npm install
 

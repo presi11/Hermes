@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render } from '@testing-library/react';
+import LayoutHOC from './HOC/Layout/LayoutHOC';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+test('renders Hermes react link', () => {
+  const { getByText } = render(<LayoutHOC />);
+  const linkElement = getByText(/Hermes/);
   expect(linkElement).toBeInTheDocument();
 });

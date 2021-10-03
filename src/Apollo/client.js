@@ -1,13 +1,15 @@
-import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache, split, ApolloProvider } from "@apollo/client";
+import { ApolloClient, ApolloLink, InMemoryCache, split, ApolloProvider } from "@apollo/client";
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createUploadLink } from 'apollo-upload-client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { setContext } from 'apollo-link-context';
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const AuthorizedApolloProvider = ({ children }) => {
     const { getAccessTokenSilently } = useAuth0();
 
-    const httpLink = new createHttpLink({
+    const httpLink = new createUploadLink({
         uri: "https://domivo.herokuapp.com/graphql",
     });
 
@@ -42,7 +44,7 @@ const AuthorizedApolloProvider = ({ children }) => {
 
     const apolloClient = new ApolloClient({
         link: ApolloLink.from([authMiddleware, splitLink]),
-        cache: new InMemoryCache()
+        cache: new InMemoryCache({addTypename:false})
     });
 
     return (
