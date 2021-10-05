@@ -1,5 +1,7 @@
 import React from "react";
-
+import { useMutation } from "@apollo/client";
+import { CHANGESTATUS } from "../../graphql/mutations";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   MDBBtn,
   MDBModal,
@@ -15,9 +17,14 @@ import {
 } from "mdb-react-ui-kit";
 
 const InformationModal = ({ order, gridModal, setGridModal }) => {
-  const { orderId, created_at, menus, user, status } = order;
+  const { user } = useAuth0();
+  const { orderId, created_at, menus, status } = order;
+  const userMetadata = user["https://graphql-api/user_metadata"];
+  const [Status, { data, error }] = useMutation(CHANGESTATUS);
 
+  console.log(data);
   const toggleShow = () => setGridModal(!gridModal);
+  if (error) return `Error! ${error.message}`;
 
   let total = 0;
 
@@ -46,7 +53,7 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
             <MDBModalBody>
               <div className="container-fluid bd-example-row">
                 <div className="row">
-                  <div className="col-md-4 col-example">{user}</div>
+                  <div className="col-md-4 col-example">{order.user}</div>
                   <div className="col-md-4 ms-auto col-example">
                     Estimado: {orderId}
                   </div>
@@ -98,9 +105,28 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
               </div>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="warning" onClick={toggleShow}>
-                Enviado
-              </MDBBtn>
+              {status === "Confirmado" && (
+                <MDBBtn
+                  color="warning"
+                  onClick={(e) =>
+                    window.confirm(
+                      "¿Ya se envio el pedido?"
+                    ) &&
+                    Status({
+                      variables: {
+                        changeStatusInput: {
+                          orderId: orderId.toString(),
+                          restaurantName: userMetadata.restaurant,
+                          status: "ENTREGADO",
+                        },
+                      },
+                    })
+                  }
+                >
+                  Enviado
+                </MDBBtn>
+              )}
+
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Cerrar
               </MDBBtn>
