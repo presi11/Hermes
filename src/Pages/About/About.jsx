@@ -7,7 +7,9 @@ const About = () => {
     <div>
         Acerca de Hermes
 
+
     </div>
+    
   );
 };
 
