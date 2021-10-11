@@ -1,39 +1,32 @@
-import React, { useRef } from 'react';
-import { useMutation } from '@apollo/client';
-import { UPLOAD_FILE } from '../../graphql/mutations';
+import React, { useState } from "react";
+/* import "resize-observer-polyfill/dist/ResizeObserver.global";
+import { TimeGridScheduler, classes } from "@remotelock/react-week-scheduler";
+import "@remotelock/react-week-scheduler/index.css"; */
+
+/* const rangeStrings = [
+  ["2019-03-04 00:15", "2019-03-04 01:45"],
+  ["2019-03-05 09:00", "2019-03-05 10:30"],
+  ["2019-03-06 22:00", "2019-03-06 22:30"],
+  ["2019-03-07 01:30", "2019-03-07 03:00"],
+  ["2019-03-07 05:30", "2019-03-07 10:00"],
+  ["2019-03-08 12:30", "2019-03-08 01:30"],
+  ["2019-03-09 22:00", "2019-03-09 23:59"],
+];
+const defaultSchedule = rangeStrings.map((range) =>
+  range.map((dateString) => new Date(dateString))
+); */
 
 const Lab = () => {
-    const fileInput = useRef();
-    const [uploadFile] = useMutation(UPLOAD_FILE);
+  /* const [schedule, setSchedule] = useState(defaultSchedule); */
 
-    console.log(fileInput);
-    const handleSubmit = (e) => {
-
-
-        const data = new FormData();
-        const {
-            current: {
-                files: [file],
-            }
-        } = fileInput;
-     
-            uploadFile({
-                variables: { file }, onCompleted(data) {
-                    console.log(data);
-                }
-            })
-       
-        data.append('file', fileInput.current.files[0])
-        e.preventDefault();
-    }
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <label className="form-label" htmlFor="customFile">File input - Drive Integration</label>
-            <input type="file" className="form-control" id="customFile" ref={fileInput} />
-            <input type="submit" />
-        </form>
-    )
-}
+  return ( <div></div>
+/*     <TimeGridScheduler
+      classes={classes}
+      originDate={new Date("2019-03-04")}
+      schedule={schedule}
+      onChange={setSchedule}
+    /> */
+  );
+};
 
 export default Lab;

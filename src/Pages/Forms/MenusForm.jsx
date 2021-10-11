@@ -50,7 +50,7 @@ const Menuform = () => {
           unit_price: formState.unit_price,
           categories: [formState.categories],
           restaurant: dataRestaurant.restaurant,
-          estimated_time: formState.estimated_time,
+          estimated_time: parseInt(formState.estimated_time),
           picture,
         },
       },
@@ -142,7 +142,7 @@ const Menuform = () => {
             }
             label="Tiempo estimado"
             id="formControlDefault"
-            type="text"
+            type="number"
             size="lg"
           />
 

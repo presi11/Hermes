@@ -40,7 +40,7 @@ const Orders = () => {
     error: orderserror,
     loading: ordersloading,
   } = useQuery(STATUSORDERS, {
-    variables: { orderRestaurantName: "Burger King", orderStatus: "CONFIRMADO" },
+    variables: { orderRestaurantName: "Burger King", orderStatus: ["CONFIRMADO", "EN_PREPARACION", "PREPARADO"] },
   });
   
   const {
@@ -49,7 +49,7 @@ const Orders = () => {
     loading: ordersEloading,
   } = useQuery(STATUSORDERS, {
     variables: {
-      orderRestaurantName:"Burger King", orderStatus:"ENTREGADO"
+      orderRestaurantName:"Burger King", orderStatus:["ENTREGADO", "ANULADO"]
       
     },
   });
