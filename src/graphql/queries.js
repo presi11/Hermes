@@ -16,42 +16,42 @@ export const STATUSORDERS = gql`
       }
       user
       status
-      
     }
   }
 `;
 
+
 export const RESTAURANT = gql`
-query Query($restaurantRestaurantName: String!) {
-  restaurant(restaurantName: $restaurantRestaurantName) {
-    address
-    attributes
-    location {
-      coordinates
-      type
-    }
-    name
-    phone
-    schedule {
-      dayOfTheWeek
-      hours
+  query Query($restaurantRestaurantName: String!) {
+    restaurant(restaurantName: $restaurantRestaurantName) {
+      address
+      attributes
+      location {
+        coordinates
+        type
+      }
+      name
+      phone
+      schedule {
+        dayOfTheWeek
+        hours
+      }
     }
   }
-}
 `;
 
 export const METADATA = gql`
-query Query($userUserId: String!) {
-  user(userId: $userUserId) {
-    name
-    user_metadata {
-      restaurant
-    }
-    app_metadata {
-      roles
+  query Query($userUserId: String!) {
+    user(userId: $userUserId) {
+      name
+      user_metadata {
+        restaurant
+      }
+      app_metadata {
+        roles
+      }
     }
   }
-}
 `;
 
 export const HELLO = gql`
