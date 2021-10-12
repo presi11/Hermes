@@ -11,7 +11,10 @@ import {
 } from "mdb-react-ui-kit";
 
 const CompleteForm = ({ data, gridModal, setGridModal }) => {
-  const toggleShow = () => setGridModal(!gridModal);
+  function toggleShow() {
+    setGridModal(!gridModal);
+    window.location.reload(false);
+  }
 
   return (
     <>

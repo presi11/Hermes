@@ -21,7 +21,7 @@ const Menuform = () => {
 
   const fileInput = useRef();
   const [CreateMenu, { data, error }] = useMutation(MENUS);
-  console.log(data);
+
   const { user } = useAuth0();
   const userMetadata = user["https://graphql-api/user_metadata"];
 
