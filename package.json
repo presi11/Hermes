@@ -20,6 +20,7 @@
     "env-cmd": "^10.1.0",
     "graphql": "^15.5.0",
     "mdb-react-ui-kit": "^1.4.0",
+    "multiselect-react-dropdown": "^2.0.7",
     "node-sass": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

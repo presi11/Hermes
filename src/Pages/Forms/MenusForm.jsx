@@ -5,7 +5,7 @@ import { RESTAURANT } from "../../graphql/queries";
 import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { useAuth0 } from "@auth0/auth0-react";
 import CompleteForm from "../../Components/Information/CompleteForm";
-
+import Multiselect from 'multiselect-react-dropdown';
 
 const Menuform = () => {
   const [gridModal, setGridModal] = useState(false);
@@ -48,7 +48,7 @@ const Menuform = () => {
           name: formState.name,
           description: formState.description,
           unit_price: formState.unit_price,
-          categories: [formState.categories],
+          categories: formState.categories,
           restaurant: dataRestaurant.restaurant,
           estimated_time: parseInt(formState.estimated_time),
           picture,
@@ -61,9 +61,14 @@ const Menuform = () => {
 
     e.preventDefault();
   };
-
+  
   if (loadingRestaurant) return "Loading...";
   if (ErrorRestaurant) return `Error! ${ErrorRestaurant.message}`;
+  
+  const state = {
+    options: [{disValue: 'Carnes', value: 'Carnes'},{disValue: 'Pizza', value:'Pizza'}]
+  };
+
 
   return (
     <>
@@ -116,18 +121,17 @@ const Menuform = () => {
 
           <br />
 
-          <MDBInput
-            value={formState.categories}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                categories: e.target.value,
+          <Multiselect
+          options={state.options}
+          displayValue="disValue"
+          value={formState.categories}
+          onSelect={(object) =>
+            setFormState({
+              ...formState,
+              categories: object.map(categoriesObject=>
+              categoriesObject.value),
               })
-            }
-            label="Categorias"
-            id="formControlDefault"
-            type="text"
-            size="lg"
+          }
           />
 
           <br />
