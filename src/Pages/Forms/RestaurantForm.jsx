@@ -3,9 +3,13 @@ import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
 import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
 import CompleteForm from "../../Components/Information/CompleteForm";
+import ScheduleSelector from "react-schedule-selector";
+import Multiselect from 'multiselect-react-dropdown';
 
 const RestaurantForm = () => {
   const [gridModal, setGridModal] = useState(false);
+  const [schedule, setSchedule] = React.useState([]);
+ 
   const [formState, setFormState] = useState({
     name: "",
     address: "",
@@ -18,6 +22,7 @@ const RestaurantForm = () => {
     schedule_hours_close: "",
     attributes: "",
   });
+  const scheduleForm = [];
   const [CreateRestaurant ,{ data, error }] = useMutation(RESTAURANT, {
     
     variables: {
@@ -32,25 +37,138 @@ const RestaurantForm = () => {
           ],
         },
         phone: formState.phone,
-        schedule: [
-          {
-            dayOfTheWeek: formState.schedule_dayOfTheWeek,
-            hours: `${formState.schedule_hours_open}-${formState.schedule_hours_close} `,
-          },
-        ],
+        schedule: scheduleForm, 
         attributes: [formState.attributes],
       },
     },
   });
   if (error) return `Error! ${error.message}`;
+
+ 
+
+  function convertHours(min, max){
+    let hour = `${min}:00-${max}:00`
+    return hour;
+  } 
+
+
+  const week = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    0: [],
+  };
+
+
+  schedule.map((x) => {
+    let day = x.getDay();
+    let hours = x.getHours();
+    week[day].push(hours);
+  });
+
+
+  Object.entries(week).map((x) => {
+    if (x[1].length > 0) {
+      let max = Math.max.apply(null, x[1]);
+      let min = Math.min.apply(null, x[1]);
+      let dayWeek;
+      let hoursRestaurant;
+      if(x[0] === "0"){
+        dayWeek = "DOMINGO";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "1"){
+        dayWeek = "LUNES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "2"){
+        dayWeek = "MARTES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "3"){
+        dayWeek = "MIERCOLES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "4"){
+        dayWeek = "JUEVES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "5"){
+        dayWeek = "VIERNES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if(x[0] === "6"){
+        dayWeek = "SABADO";
+        hoursRestaurant = convertHours(min, max);
+      }
+
+/*       switch (x[0]) {
+        case 0:
+           dayWeek = "DOMINGO";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 1:
+
+           dayWeek = "LUNES";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 2:
+           dayWeek = "MARTES";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 3:
+           dayWeek = "MIERCOLES";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 4:
+           dayWeek = "JUEVES";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 5:
+           dayWeek = "VIERNES";
+           hoursRestaurant = convertHours(min, max);
+          break;
+        case 6:
+           dayWeek = "SABADO";
+           hoursRestaurant = convertHours(min, max);
+          break;
+
+        default:
+        // code block 
+      }  */
+
+      const day = {
+        dayOfTheWeek: dayWeek,
+        hours: hoursRestaurant,
+      };
+      scheduleForm.push(day);
+
+    }
+  });
+
+
+  const startDate = new Date("2021-08-23T14:27:01.444Z");
+
+  const state = {
+    options: [{disValue: 'Parqueadero', value: 'PARKING'},
+              {disValue: 'Servicio en restaurante', value:'DINE_IN'},
+              {disValue: 'Para llevar', value: 'TAKEAWAY'},
+              {disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY'},
+              {disValue: 'Entrega a domicilio', value: 'DELIVERY'},
+              {disValue: 'WiFi', value: 'WIFI'},
+              {disValue: 'Musica', value: 'MUSIC'}]
+  };
   return (
     <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-
-          CreateRestaurant();
           setGridModal(!gridModal);
+          CreateRestaurant();
+         
         }}
       >
         <div style={{ width: "23rem" }}>
@@ -126,60 +244,32 @@ const RestaurantForm = () => {
             type="text"
           />
 
-          <br />
-          <MDBInput
-            value={formState.schedule_dayOfTheWeek}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                schedule_dayOfTheWeek: e.target.value,
-              })
-            }
-            label="Calendario"
-            id="formControlDefault"
-            type="text"
-          />
+
 
           <br />
-          <label> Hora de apertura</label>
-          <MDBInput
-            value={formState.schedule_hours_open}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                schedule_hours_open: e.target.value,
-              })
-            }
-            type="time"
-            id="formControlDefault"
-          />
+          <ScheduleSelector
+      selection={schedule}
+      numDays={7}
+      minTime={8}
+      dateFormat="dddd"
+      startDate={startDate}
+      maxTime={23}
+      hourlyChunks={1}
+      onChange={setSchedule}
+    />
 
           <br />
-          <label> Hora de cierre</label>
-          <MDBInput
-            value={formState.schedule_hours_close}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                schedule_hours_close: e.target.value,
+          <Multiselect
+          options={state.options}
+          displayValue="disValue"
+          value={formState.attributes}
+          onSelect={(object) =>
+            setFormState({
+              ...formState,
+              categories: object.map(attributesObject=>
+              attributesObject.value),
               })
-            }
-            id="formControlDefault"
-            type="time"
-          />
-
-          <br />
-          <MDBInput
-            value={formState.attributes}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                attributes: e.target.value,
-              })
-            }
-            label="Atributos"
-            id="formControlDefault"
-            type="text"
+          }
           />
         </div>
         <br/>

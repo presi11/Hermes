@@ -22,7 +22,6 @@ const InformationModal = ({ order, gridModal, setGridModal }) => {
   const userMetadata = user["https://graphql-api/user_metadata"];
   const [Status, { data, error }] = useMutation(CHANGESTATUS);
 
-  console.log(data);
   const toggleShow = () => setGridModal(!gridModal);
   if (error) return `Error! ${error.message}`;
 
