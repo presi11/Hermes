@@ -3,6 +3,7 @@ import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
 import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
 import CompleteForm from "../../Components/Information/CompleteForm";
+import Multiselect from 'multiselect-react-dropdown';
 
 const RestaurantForm = () => {
   const [gridModal, setGridModal] = useState(false);
@@ -43,6 +44,15 @@ const RestaurantForm = () => {
     },
   });
   if (error) return `Error! ${error.message}`;
+  const state = {
+    options: [{disValue: 'Parqueadero', value: 'PARKING'},
+              {disValue: 'Servicio en restaurante', value:'DINE_IN'},
+              {disValue: 'Para llevar', value: 'TAKEAWAY'},
+              {disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY'},
+              {disValue: 'Entrega a domicilio', value: 'DELIVERY'},
+              {disValue: 'WiFi', value: 'WIFI'},
+              {disValue: 'Musica', value: 'MUSIC'}]
+  };
   return (
     <div>
       <form
@@ -169,17 +179,17 @@ const RestaurantForm = () => {
           />
 
           <br />
-          <MDBInput
-            value={formState.attributes}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                attributes: e.target.value,
+          <Multiselect
+          options={state.options}
+          displayValue="disValue"
+          value={formState.attributes}
+          onSelect={(object) =>
+            setFormState({
+              ...formState,
+              categories: object.map(attributesObject=>
+              attributesObject.value),
               })
-            }
-            label="Atributos"
-            id="formControlDefault"
-            type="text"
+          }
           />
         </div>
         <br/>
