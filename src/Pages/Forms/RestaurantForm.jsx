@@ -40,7 +40,7 @@ const RestaurantForm = () => {
             hours: `${formState.schedule_hours_open}-${formState.schedule_hours_close} `,
           },
         ],
-        attributes: [formState.attributes],
+        attributes: formState.attributes,
       },
     },
   });
@@ -155,7 +155,6 @@ const RestaurantForm = () => {
                     schedule_dayOfTheWeek: e.target.value,
                   })
                 }
-                label="Calendario"
                 id="formControlDefault"
                 type="text"
               />
@@ -200,7 +199,7 @@ const RestaurantForm = () => {
                 onSelect={(object) =>
                   setFormState({
                     ...formState,
-                    categories: object.map(attributesObject=>
+                    attributes: object.map(attributesObject=>
                     attributesObject.value),
                     })
                 }
