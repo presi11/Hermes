@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const STATUSORDERS = gql`
-  query Query($orderRestaurantName: String!, $orderStatus: OrderStatus) {
+query Query($orderRestaurantName: String!, $orderStatus: [OrderStatus!]) {
     order(restaurantName: $orderRestaurantName, status: $orderStatus) {
       orderId
       created_at
