@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
 import CompleteForm from "../../Components/Information/CompleteForm";
+import ScheduleSelector from "react-schedule-selector";
 import Multiselect from 'multiselect-react-dropdown';
-import { Container,Button, Form, FormGroup, Label, Input, FormText, Card } from 'reactstrap';
+import { Container, Button, Form, FormGroup, Label, Input, FormText, Card } from 'reactstrap';
 
 const RestaurantForm = () => {
   const [gridModal, setGridModal] = useState(false);
+  const [schedule, setSchedule] = React.useState([]);
+
   const [formState, setFormState] = useState({
     name: "",
     address: "",
@@ -20,8 +23,9 @@ const RestaurantForm = () => {
     schedule_hours_close: "",
     attributes: "",
   });
-  const [CreateRestaurant ,{ data, error }] = useMutation(RESTAURANT, {
-    
+  const scheduleForm = [];
+  const [CreateRestaurant, { data, error }] = useMutation(RESTAURANT, {
+
     variables: {
       restaurantInput: {
         name: formState.name,
@@ -34,25 +38,93 @@ const RestaurantForm = () => {
           ],
         },
         phone: formState.phone,
-        schedule: [
-          {
-            dayOfTheWeek: formState.schedule_dayOfTheWeek,
-            hours: `${formState.schedule_hours_open}-${formState.schedule_hours_close} `,
-          },
-        ],
+        schedule: scheduleForm,
         attributes: formState.attributes,
       },
     },
   });
   if (error) return `Error! ${error.message}`;
+
+
+
+  function convertHours(min, max) {
+    let hour = `${min}:00-${max}:00`
+    return hour;
+  }
+
+
+  const week = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    0: [],
+  };
+
+
+  schedule.map((x) => {
+    let day = x.getDay();
+    let hours = x.getHours();
+    week[day].push(hours);
+  });
+
+
+  Object.entries(week).map((x) => {
+    if (x[1].length > 0) {
+      let max = Math.max.apply(null, x[1]);
+      let min = Math.min.apply(null, x[1]);
+      let dayWeek;
+      let hoursRestaurant;
+      if (x[0] === "0") {
+        dayWeek = "DOMINGO";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "1") {
+        dayWeek = "LUNES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "2") {
+        dayWeek = "MARTES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "3") {
+        dayWeek = "MIERCOLES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "4") {
+        dayWeek = "JUEVES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "5") {
+        dayWeek = "VIERNES";
+        hoursRestaurant = convertHours(min, max);
+      }
+      if (x[0] === "6") {
+        dayWeek = "SABADO";
+        hoursRestaurant = convertHours(min, max);
+      }
+      const day = {
+        dayOfTheWeek: dayWeek,
+        hours: hoursRestaurant,
+      };
+      scheduleForm.push(day);
+
+    }
+  });
+
+
+  const startDate = new Date("2021-08-23T14:27:01.444Z");
+
   const state = {
-    options: [{disValue: 'Parqueadero', value: 'PARKING'},
-              {disValue: 'Servicio en restaurante', value:'DINE_IN'},
-              {disValue: 'Para llevar', value: 'TAKEAWAY'},
-              {disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY'},
-              {disValue: 'Entrega a domicilio', value: 'DELIVERY'},
-              {disValue: 'WiFi', value: 'WIFI'},
-              {disValue: 'Musica', value: 'MUSIC'}]
+    options: [{ disValue: 'Parqueadero', value: 'PARKING' },
+    { disValue: 'Servicio en restaurante', value: 'DINE_IN' },
+    { disValue: 'Para llevar', value: 'TAKEAWAY' },
+    { disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY' },
+    { disValue: 'Entrega a domicilio', value: 'DELIVERY' },
+    { disValue: 'WiFi', value: 'WIFI' },
+    { disValue: 'Musica', value: 'MUSIC' }]
   };
   return (
     <div>
@@ -66,25 +138,25 @@ const RestaurantForm = () => {
               setGridModal(!gridModal);
             }}
           >
-              <FormGroup>
-                  <Label>Nombre</Label>
-                  <Input
-                  value={formState.name}
-                  onChange={(e) =>
-                    setFormState({
-                      ...formState,
-                      name: e.target.value,
-                    })
-                  }
-                  
-                  id="formControlDefault"
-                  type="text"
-                />
-              </FormGroup>
+            <FormGroup>
+              <Label>Nombre</Label>
+              <Input
+                value={formState.name}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    name: e.target.value,
+                  })
+                }
 
-              <FormGroup>
-                <Label>Direccion</Label>
-                <Input
+                id="formControlDefault"
+                type="text"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Direccion</Label>
+              <Input
                 value={formState.address}
                 onChange={(e) =>
                   setFormState({
@@ -96,11 +168,11 @@ const RestaurantForm = () => {
                 id="formControlDefault"
                 type="text"
               />
-              </FormGroup>
+            </FormGroup>
 
-              <FormGroup>
-                <Label>Cordenadas en X</Label>
-                <MDBInput
+            <FormGroup>
+              <Label>Cordenadas en X</Label>
+              <MDBInput
                 value={formState.location_coordinates_x}
                 onChange={(e) =>
                   setFormState({
@@ -112,10 +184,10 @@ const RestaurantForm = () => {
                 id="formControlDefault"
                 type="number"
               />
-              </FormGroup>
-              <FormGroup>
-                <Label>Coordenas en Y </Label>
-                <MDBInput
+            </FormGroup>
+            <FormGroup>
+              <Label>Coordenas en Y </Label>
+              <MDBInput
                 value={formState.location_coordinates_y}
                 onChange={(e) =>
                   setFormState({
@@ -127,11 +199,11 @@ const RestaurantForm = () => {
                 id="typeNumber"
                 type="number"
               />
-              </FormGroup>
-              
-              <FormGroup>
-                <Label>Telefono</Label>
-                <MDBInput
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Telefono</Label>
+              <MDBInput
                 value={formState.phone}
                 onChange={(e) =>
                   setFormState({
@@ -142,82 +214,47 @@ const RestaurantForm = () => {
                 label="Telefono"
                 id="formControlDefault"
                 type="text"
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label>Calendario</Label>
-                <MDBInput
-                value={formState.schedule_dayOfTheWeek}
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    schedule_dayOfTheWeek: e.target.value,
-                  })
-                }
-                id="formControlDefault"
-                type="text"
               />
-              </FormGroup>
-              
-              <FormGroup>
-                <label> Hora de apertura</label>
-                <MDBInput
-                  value={formState.schedule_hours_open}
-                  onChange={(e) =>
-                    setFormState({
-                      ...formState,
-                      schedule_hours_open: e.target.value,
-                    })
-                  }
-                  type="time"
-                  id="formControlDefault"
-                />
-              </FormGroup>
-              
-              <FormGroup>
-                <label> Hora de cierre</label>
-                <MDBInput
-                  value={formState.schedule_hours_close}
-                  onChange={(e) =>
-                    setFormState({
-                      ...formState,
-                      schedule_hours_close: e.target.value,
-                    })
-                  }
-                  id="formControlDefault"
-                  type="time"
-                />
-              </FormGroup>
-              
-              <FormGroup>
-                <Label>Atributos</Label>
-                <Multiselect
-                options={state.options}
-                displayValue="disValue"
-                value={formState.attributes}
-                onSelect={(object) =>
-                  setFormState({
-                    ...formState,
-                    attributes: object.map(attributesObject=>
+            </FormGroup>
+
+            <ScheduleSelector
+              selection={schedule}
+              numDays={7}
+              minTime={8}
+              dateFormat="dddd"
+              startDate={startDate}
+              maxTime={23}
+              hourlyChunks={1}
+              onChange={setSchedule}
+            />
+
+
+            <Multiselect
+              options={state.options}
+              displayValue="disValue"
+              value={formState.attributes}
+              onSelect={(object) =>
+                setFormState({
+                  ...formState,
+                  attributes: object.map(attributesObject =>
                     attributesObject.value),
-                    })
-                }
-                />
-              </FormGroup>
-                <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
-              <FormGroup>
-              </FormGroup>   
+                })
+              }
+            />
+
+            <br />
+            <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
+
+            {data && (
+              <CompleteForm
+                data={data.restaurant}
+                gridModal={gridModal}
+                setGridModal={setGridModal}
+              ></CompleteForm>
+            )}
           </Form>
         </Card>
       </Container>
-      {data && (
-        <CompleteForm
-          data={data.restaurant}
-          gridModal={gridModal}
-          setGridModal={setGridModal}
-        ></CompleteForm>
-      )}
     </div>
   );
 };

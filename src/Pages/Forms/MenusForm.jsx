@@ -21,7 +21,7 @@ const Menuform = () => {
 
   const fileInput = useRef();
   const [CreateMenu, { data, error }] = useMutation(MENUS);
-  console.log(data);
+
   const { user } = useAuth0();
   const userMetadata = user["https://graphql-api/user_metadata"];
 
@@ -125,13 +125,6 @@ const Menuform = () => {
           options={state.options}
           displayValue="disValue"
           value={formState.categories}
-          onSelect={(object) =>
-            setFormState({
-              ...formState,
-              categories: object.map(categoriesObject=>
-              categoriesObject.value),
-              })
-          }
           />
 
           <br />
@@ -146,7 +139,7 @@ const Menuform = () => {
             }
             label="Tiempo estimado"
             id="formControlDefault"
-            type="text"
+            type="number"
             size="lg"
           />
 

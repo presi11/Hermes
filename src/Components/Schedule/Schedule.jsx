@@ -1,7 +1,7 @@
 import React from "react";
 import ScheduleSelector from "react-schedule-selector";
 
-const Lab = () => {
+const Schedule = ({scheduleForm}) => {
   const [schedule, setSchedule] = React.useState([]);
 
   function convertHours(min, max){
@@ -9,6 +9,7 @@ const Lab = () => {
     return hour;
   } 
 
+  scheduleForm = [];
   const week = {
     1: [],
     2: [],
@@ -18,9 +19,6 @@ const Lab = () => {
     6: [],
     0: [],
   };
-
-  const scheduleForm = [];
-
 
 
   schedule.map((x) => {
@@ -33,7 +31,6 @@ const Lab = () => {
 
 
   Object.entries(week).map((x) => {
-
     if (x[1].length > 0) {
       let max = Math.max.apply(null, x[1]);
       let min = Math.min.apply(null, x[1]);
@@ -68,7 +65,7 @@ const Lab = () => {
         hoursRestaurant = convertHours(min, max);
       }
 
-     /*  switch (x[0]) {
+/*       switch (x[0]) {
         case 0:
            dayWeek = "DOMINGO";
            hoursRestaurant = convertHours(min, max);
@@ -99,8 +96,8 @@ const Lab = () => {
           break;
 
         default:
-        // code block */
-     /*  } */
+        // code block 
+      }  */
 
       const day = {
         dayOfTheWeek: dayWeek,
@@ -111,12 +108,15 @@ const Lab = () => {
     }
   });
 
+
+  const startDate = new Date("2021-08-23T14:27:01.444Z");
   return (
     <ScheduleSelector
       selection={schedule}
       numDays={7}
       minTime={8}
       dateFormat="dddd"
+      startDate={startDate}
       maxTime={23}
       hourlyChunks={1}
       onChange={setSchedule}
@@ -124,4 +124,4 @@ const Lab = () => {
   );
 };
 
-export default Lab;
+export default Schedule;

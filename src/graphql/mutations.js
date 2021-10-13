@@ -8,6 +8,11 @@ export const UPLOAD_FILE = gql`
   }
 `;
 
+export const CHANGESTATUS = gql`
+  mutation ChangeStatusMutation($changeStatusInput: ChangeStatusInput!) {
+    changeStatus(input: $changeStatusInput)
+  }
+`;
 export const RESTAURANT = gql`
   mutation RestaurantMutation($restaurantInput: RestaurantInput!) {
     restaurant(input: $restaurantInput)
