@@ -220,7 +220,7 @@ const RestaurantForm = () => {
               <Multiselect
                 options={state.options}
                 displayValue="disValue"
-                label="Atributos"
+                placeholder="Atributos"
                 value={formState.attributes}
                 onSelect={(object) =>
                   setFormState({
