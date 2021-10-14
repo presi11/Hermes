@@ -48,6 +48,10 @@ const RestaurantForm = () => {
 
 
   function convertHours(min, max) {
+    if(min < 10){
+      let hourearly = `0${min}:00-${max}:00`
+      return hourearly;
+    }
     let hour = `${min}:00-${max}:00`
     return hour;
   }
