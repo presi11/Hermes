@@ -130,6 +130,13 @@ const Menuform = () => {
             displayValue="disValue"
             placeholder="Categorias de comidas"
             value={formState.categories}
+            onSelect={(object) =>
+              setFormState({
+                ...formState,
+                categories: object.map(categoriesObject=>
+                categoriesObject.value),
+                })
+            }
           />
 
           <br />
