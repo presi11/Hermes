@@ -217,6 +217,22 @@ const RestaurantForm = () => {
             </FormGroup>
             <br />
             <FormGroup>
+              <Multiselect
+                options={state.options}
+                displayValue="disValue"
+                label="Atributos"
+                value={formState.attributes}
+                onSelect={(object) =>
+                  setFormState({
+                    ...formState,
+                    attributes: object.map(attributesObject =>
+                      attributesObject.value),
+                  })
+                }
+              />
+            </FormGroup>
+            <br />
+            <FormGroup>
               <ScheduleSelector
                 selection={schedule}
                 numDays={7}
@@ -228,21 +244,8 @@ const RestaurantForm = () => {
                 onChange={setSchedule}
               />
             </FormGroup>
-            <br />
-            <FormGroup>
-              <Multiselect
-                options={state.options}
-                displayValue="disValue"
-                value={formState.attributes}
-                onSelect={(object) =>
-                  setFormState({
-                    ...formState,
-                    attributes: object.map(attributesObject =>
-                      attributesObject.value),
-                  })
-                }
-              />
-            </FormGroup>
+     
+
 
             <br />
             <MDBBtn type="submit" color='primary'>Crear</MDBBtn>

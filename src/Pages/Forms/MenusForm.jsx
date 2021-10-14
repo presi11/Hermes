@@ -128,6 +128,7 @@ const Menuform = () => {
           <Multiselect
             options={state.options}
             displayValue="disValue"
+            label="Categorias de comidas"
             value={formState.categories}
           />
 
