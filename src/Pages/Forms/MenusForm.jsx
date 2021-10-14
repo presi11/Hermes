@@ -6,6 +6,7 @@ import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { useAuth0 } from "@auth0/auth0-react";
 import CompleteForm from "../../Components/Information/CompleteForm";
 import Multiselect from 'multiselect-react-dropdown';
+import { Container, Form, FormGroup, Label, Input, Card } from 'reactstrap';
 
 const Menuform = () => {
   const [gridModal, setGridModal] = useState(false);
@@ -61,19 +62,22 @@ const Menuform = () => {
 
     e.preventDefault();
   };
-  
+
   if (loadingRestaurant) return "Loading...";
   if (ErrorRestaurant) return `Error! ${ErrorRestaurant.message}`;
-  
+
   const state = {
-    options: [{disValue: 'Carnes', value: 'Carnes'},{disValue: 'Pizza', value:'Pizza'}]
+    options: [{ disValue: 'Carnes', value: 'Carnes' }, 
+              { disValue: 'Pizza', value: 'Pizza' },
+              ]
   };
 
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div style={{ width: "23rem" }}>
+    <Container>
+      <Card>
+        <form onSubmit={handleSubmit}>
+          <br/>
           <MDBInput
             value={formState.name}
             onChange={(e) =>
@@ -122,9 +126,9 @@ const Menuform = () => {
           <br />
 
           <Multiselect
-          options={state.options}
-          displayValue="disValue"
-          value={formState.categories}
+            options={state.options}
+            displayValue="disValue"
+            value={formState.categories}
           />
 
           <br />
@@ -144,31 +148,31 @@ const Menuform = () => {
           />
 
           <br />
-        </div>
-        <label className="form-label" htmlFor="customFile">
-          Imagen del menu
-        </label>
-        <input
-        
-          type="file"
-          className="form-control"
-          id="customFile"
-          ref={fileInput}
-        />
-        <br />
-        <MDBBtn type="submit" color="primary">
-          Crear
-        </MDBBtn>
-      </form>
+          <label className="form-label" htmlFor="customFile">
+            Imagen del menu
+          </label>
+          <input
 
-      {data && (
-        <CompleteForm
-          data={data.menu}
-          gridModal={gridModal}
-          setGridModal={setGridModal}
-        ></CompleteForm>
-      )}
-    </>
+            type="file"
+            className="form-control"
+            id="customFile"
+            ref={fileInput}
+          />
+          <br />
+          <MDBBtn type="submit" color="primary">
+            Crear
+          </MDBBtn>
+        </form>
+
+        {data && (
+          <CompleteForm
+            data={data.menu}
+            gridModal={gridModal}
+            setGridModal={setGridModal}
+          ></CompleteForm>
+        )}
+      </Card>
+    </Container>
   );
 };
 

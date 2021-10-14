@@ -79,24 +79,6 @@ const LayoutHOC = ({ children }) => {
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNav}>
             <MDBNavbarNav>
-              <MDBNavbarItem>
-                <MDBNavbarLink
-                  className={LayoutStyles.cursorPointer}
-                  onClick={() => redirect("about")}
-                >
-                  Acerca de
-                </MDBNavbarLink>
-              </MDBNavbarItem>
-              {isAuthenticated && (
-                <MDBNavbarItem>
-                  <MDBNavbarLink
-                    className={LayoutStyles.cursorPointer}
-                    onClick={() => redirect("profile")}
-                  >
-                    Perfil
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-              )}
               {isAuthenticated && (
                 <MDBNavbarItem>
                   <MDBNavbarLink
@@ -104,35 +86,6 @@ const LayoutHOC = ({ children }) => {
                     onClick={() => redirect("orders")}
                   >
                     Pedidos
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-              )}
-              {!isAuthenticated ? (
-                <MDBNavbarItem>
-                  <MDBNavbarLink
-                    className={LayoutStyles.cursorPointer}
-                    onClick={() => loginWithRedirect()}
-                  >
-                    Iniciar sesión
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-              ) : (
-                <MDBNavbarItem>
-                  <MDBNavbarLink
-                    className={LayoutStyles.cursorPointer}
-                    onClick={() => logout({ returnTo: window.location.origin })}
-                  >
-                    Cerrar Sesión
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-              )}
-              {isAuthenticated && (
-                <MDBNavbarItem>
-                  <MDBNavbarLink
-                    className={LayoutStyles.cursorPointer}
-                    onClick={() => redirect("lab")}
-                  >
-                    Testing Zone
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               )}

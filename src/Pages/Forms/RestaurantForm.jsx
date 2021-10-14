@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import CompleteForm from "../../Components/Information/CompleteForm";
 import ScheduleSelector from "react-schedule-selector";
 import Multiselect from 'multiselect-react-dropdown';
-import { Container, Button, Form, FormGroup, Label, Input, FormText, Card } from 'reactstrap';
+import { Container, Form, FormGroup, Label, Input, Card } from 'reactstrap';
 
 const RestaurantForm = () => {
   const [gridModal, setGridModal] = useState(false);
@@ -138,6 +138,7 @@ const RestaurantForm = () => {
               setGridModal(!gridModal);
             }}
           >
+            <br />
             <FormGroup>
               <Label>Nombre</Label>
               <Input
@@ -153,7 +154,7 @@ const RestaurantForm = () => {
                 type="text"
               />
             </FormGroup>
-
+            <br />
             <FormGroup>
               <Label>Direccion</Label>
               <Input
@@ -169,7 +170,7 @@ const RestaurantForm = () => {
                 type="text"
               />
             </FormGroup>
-
+            <br />
             <FormGroup>
               <Label>Cordenadas en X</Label>
               <MDBInput
@@ -180,11 +181,11 @@ const RestaurantForm = () => {
                     location_coordinates_x: e.target.value,
                   })
                 }
-                label="Coordenadas X"
                 id="formControlDefault"
                 type="number"
               />
             </FormGroup>
+            <br />
             <FormGroup>
               <Label>Coordenas en Y </Label>
               <MDBInput
@@ -195,12 +196,11 @@ const RestaurantForm = () => {
                     location_coordinates_y: e.target.value,
                   })
                 }
-                label="Coordenadas Y"
                 id="typeNumber"
                 type="number"
               />
             </FormGroup>
-
+            <br />
             <FormGroup>
               <Label>Telefono</Label>
               <MDBInput
@@ -211,36 +211,38 @@ const RestaurantForm = () => {
                     phone: e.target.value,
                   })
                 }
-                label="Telefono"
                 id="formControlDefault"
                 type="text"
               />
             </FormGroup>
-
-            <ScheduleSelector
-              selection={schedule}
-              numDays={7}
-              minTime={8}
-              dateFormat="dddd"
-              startDate={startDate}
-              maxTime={23}
-              hourlyChunks={1}
-              onChange={setSchedule}
-            />
-
-
-            <Multiselect
-              options={state.options}
-              displayValue="disValue"
-              value={formState.attributes}
-              onSelect={(object) =>
-                setFormState({
-                  ...formState,
-                  attributes: object.map(attributesObject =>
-                    attributesObject.value),
-                })
-              }
-            />
+            <br />
+            <FormGroup>
+              <ScheduleSelector
+                selection={schedule}
+                numDays={7}
+                minTime={8}
+                dateFormat="dddd"
+                startDate={startDate}
+                maxTime={23}
+                hourlyChunks={1}
+                onChange={setSchedule}
+              />
+            </FormGroup>
+            <br />
+            <FormGroup>
+              <Multiselect
+                options={state.options}
+                displayValue="disValue"
+                value={formState.attributes}
+                onSelect={(object) =>
+                  setFormState({
+                    ...formState,
+                    attributes: object.map(attributesObject =>
+                      attributesObject.value),
+                  })
+                }
+              />
+            </FormGroup>
 
             <br />
             <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
