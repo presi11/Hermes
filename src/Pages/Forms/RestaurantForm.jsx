@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { MDBInput, MDBBtn} from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { RESTAURANT } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
 import CompleteForm from "../../Components/Information/CompleteForm";
 import ScheduleSelector from "react-schedule-selector";
 import Multiselect from 'multiselect-react-dropdown';
+import { Container, Button, Form, FormGroup, Label, Input, FormText, Card } from 'reactstrap';
 
 const RestaurantForm = () => {
   const [gridModal, setGridModal] = useState(false);
   const [schedule, setSchedule] = React.useState([]);
- 
+
   const [formState, setFormState] = useState({
     name: "",
     address: "",
@@ -23,8 +24,8 @@ const RestaurantForm = () => {
     attributes: "",
   });
   const scheduleForm = [];
-  const [CreateRestaurant ,{ data, error }] = useMutation(RESTAURANT, {
-    
+  const [CreateRestaurant, { data, error }] = useMutation(RESTAURANT, {
+
     variables: {
       restaurantInput: {
         name: formState.name,
@@ -37,19 +38,19 @@ const RestaurantForm = () => {
           ],
         },
         phone: formState.phone,
-        schedule: scheduleForm, 
-        attributes: [formState.attributes],
+        schedule: scheduleForm,
+        attributes: formState.attributes,
       },
     },
   });
   if (error) return `Error! ${error.message}`;
 
- 
 
-  function convertHours(min, max){
+
+  function convertHours(min, max) {
     let hour = `${min}:00-${max}:00`
     return hour;
-  } 
+  }
 
 
   const week = {
@@ -76,70 +77,34 @@ const RestaurantForm = () => {
       let min = Math.min.apply(null, x[1]);
       let dayWeek;
       let hoursRestaurant;
-      if(x[0] === "0"){
+      if (x[0] === "0") {
         dayWeek = "DOMINGO";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "1"){
+      if (x[0] === "1") {
         dayWeek = "LUNES";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "2"){
+      if (x[0] === "2") {
         dayWeek = "MARTES";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "3"){
+      if (x[0] === "3") {
         dayWeek = "MIERCOLES";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "4"){
+      if (x[0] === "4") {
         dayWeek = "JUEVES";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "5"){
+      if (x[0] === "5") {
         dayWeek = "VIERNES";
         hoursRestaurant = convertHours(min, max);
       }
-      if(x[0] === "6"){
+      if (x[0] === "6") {
         dayWeek = "SABADO";
         hoursRestaurant = convertHours(min, max);
       }
-
-/*       switch (x[0]) {
-        case 0:
-           dayWeek = "DOMINGO";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 1:
-
-           dayWeek = "LUNES";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 2:
-           dayWeek = "MARTES";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 3:
-           dayWeek = "MIERCOLES";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 4:
-           dayWeek = "JUEVES";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 5:
-           dayWeek = "VIERNES";
-           hoursRestaurant = convertHours(min, max);
-          break;
-        case 6:
-           dayWeek = "SABADO";
-           hoursRestaurant = convertHours(min, max);
-          break;
-
-        default:
-        // code block 
-      }  */
-
       const day = {
         dayOfTheWeek: dayWeek,
         hours: hoursRestaurant,
@@ -153,135 +118,143 @@ const RestaurantForm = () => {
   const startDate = new Date("2021-08-23T14:27:01.444Z");
 
   const state = {
-    options: [{disValue: 'Parqueadero', value: 'PARKING'},
-              {disValue: 'Servicio en restaurante', value:'DINE_IN'},
-              {disValue: 'Para llevar', value: 'TAKEAWAY'},
-              {disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY'},
-              {disValue: 'Entrega a domicilio', value: 'DELIVERY'},
-              {disValue: 'WiFi', value: 'WIFI'},
-              {disValue: 'Musica', value: 'MUSIC'}]
+    options: [{ disValue: 'Parqueadero', value: 'PARKING' },
+    { disValue: 'Servicio en restaurante', value: 'DINE_IN' },
+    { disValue: 'Para llevar', value: 'TAKEAWAY' },
+    { disValue: 'Entrega sin contacto', value: 'NO_CONTACT_DELIVERY' },
+    { disValue: 'Entrega a domicilio', value: 'DELIVERY' },
+    { disValue: 'WiFi', value: 'WIFI' },
+    { disValue: 'Musica', value: 'MUSIC' }]
   };
   return (
     <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setGridModal(!gridModal);
-          CreateRestaurant();
-         
-        }}
-      >
-        <div style={{ width: "23rem" }}>
-          <MDBInput
-            value={formState.name}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                name: e.target.value,
-              })
-            }
-            label="Nombre"
-            id="formControlDefault"
-            type="text"
-            size="lg"
-          />
+      <Container>
+        <Card>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
 
-          <br />
+              CreateRestaurant();
+              setGridModal(!gridModal);
+            }}
+          >
+            <FormGroup>
+              <Label>Nombre</Label>
+              <Input
+                value={formState.name}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    name: e.target.value,
+                  })
+                }
 
-          <MDBInput
-            value={formState.address}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                address: e.target.value,
-              })
-            }
-            label="Dirección"
-            id="formControlDefault"
-            type="text"
-          />
+                id="formControlDefault"
+                type="text"
+              />
+            </FormGroup>
 
-          <br />
+            <FormGroup>
+              <Label>Direccion</Label>
+              <Input
+                value={formState.address}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    address: e.target.value,
+                  })
+                }
+                label="Dirección"
+                id="formControlDefault"
+                type="text"
+              />
+            </FormGroup>
 
-          <MDBInput
-            value={formState.location_coordinates_x}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                location_coordinates_x: e.target.value,
-              })
-            }
-            label="Coordenadas X"
-            id="formControlDefault"
-            type="number"
-          />
+            <FormGroup>
+              <Label>Cordenadas en X</Label>
+              <MDBInput
+                value={formState.location_coordinates_x}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    location_coordinates_x: e.target.value,
+                  })
+                }
+                label="Coordenadas X"
+                id="formControlDefault"
+                type="number"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Coordenas en Y </Label>
+              <MDBInput
+                value={formState.location_coordinates_y}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    location_coordinates_y: e.target.value,
+                  })
+                }
+                label="Coordenadas Y"
+                id="typeNumber"
+                type="number"
+              />
+            </FormGroup>
 
-          <br />
-          <MDBInput
-            value={formState.location_coordinates_y}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                location_coordinates_y: e.target.value,
-              })
-            }
-            label="Coordenadas Y"
-            id="typeNumber"
-            type="number"
-          />
+            <FormGroup>
+              <Label>Telefono</Label>
+              <MDBInput
+                value={formState.phone}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    phone: e.target.value,
+                  })
+                }
+                label="Telefono"
+                id="formControlDefault"
+                type="text"
+              />
+            </FormGroup>
 
-          <br />
-          <MDBInput
-            value={formState.phone}
-            onChange={(e) =>
-              setFormState({
-                ...formState,
-                phone: e.target.value,
-              })
-            }
-            label="Telefono"
-            id="formControlDefault"
-            type="text"
-          />
-
+            <ScheduleSelector
+              selection={schedule}
+              numDays={7}
+              minTime={8}
+              dateFormat="dddd"
+              startDate={startDate}
+              maxTime={23}
+              hourlyChunks={1}
+              onChange={setSchedule}
+            />
 
 
-          <br />
-          <ScheduleSelector
-      selection={schedule}
-      numDays={7}
-      minTime={8}
-      dateFormat="dddd"
-      startDate={startDate}
-      maxTime={23}
-      hourlyChunks={1}
-      onChange={setSchedule}
-    />
+            <Multiselect
+              options={state.options}
+              displayValue="disValue"
+              value={formState.attributes}
+              onSelect={(object) =>
+                setFormState({
+                  ...formState,
+                  attributes: object.map(attributesObject =>
+                    attributesObject.value),
+                })
+              }
+            />
 
-          <br />
-          <Multiselect
-          options={state.options}
-          displayValue="disValue"
-          value={formState.attributes}
-          onSelect={(object) =>
-            setFormState({
-              ...formState,
-              categories: object.map(attributesObject=>
-              attributesObject.value),
-              })
-          }
-          />
-        </div>
-        <br/>
-        <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
-      </form>
-      {data && (
-        <CompleteForm
-          data={data.restaurant}
-          gridModal={gridModal}
-          setGridModal={setGridModal}
-        ></CompleteForm>
-      )}
+            <br />
+            <MDBBtn type="submit" color='primary'>Crear</MDBBtn>
+
+            {data && (
+              <CompleteForm
+                data={data.restaurant}
+                gridModal={gridModal}
+                setGridModal={setGridModal}
+              ></CompleteForm>
+            )}
+          </Form>
+        </Card>
+      </Container>
     </div>
   );
 };

@@ -125,13 +125,6 @@ const Menuform = () => {
           options={state.options}
           displayValue="disValue"
           value={formState.categories}
-          onSelect={(object) =>
-            setFormState({
-              ...formState,
-              categories: object.map(categoriesObject=>
-              categoriesObject.value),
-              })
-          }
           />
 
           <br />
